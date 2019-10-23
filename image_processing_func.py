@@ -96,6 +96,7 @@ use_img=optimize_preprocess(use_img)
 
 
 cv2.imshow("original",use_img)
+#change function down here to test out all the functions
 res=bit_plane_slicing(use_img,2)
 cv2.imshow("edited",res)
 cv2.waitKey(0)
