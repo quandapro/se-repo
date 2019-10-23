@@ -10,6 +10,7 @@ def to_frequency_domain(img):
 
 
 def high_pass_filter(img):
+    #use to detect edges of picture
     f = np.fft.fft2(img)
     fshift = np.fft.fftshift(f)
     rows, cols = img.shape
@@ -21,6 +22,7 @@ def high_pass_filter(img):
     img_back = np.abs(img_back)
     return img_back
 def gauss_blur(img,ksize):
+    #ksize needs to be odd number
     res=cv2.GaussianBlur(img,(ksize,ksize),sigmaX=0)
     return res
 
@@ -30,19 +32,50 @@ def log_transform(img):
     log_transformed = np.array(log_transformed, dtype=np.uint8)
     return log_transformed
 
+def gamma_transform(img,gamma):
+    #gamma should be between 0.1 and 3
+    #gamma=1 is original picture
+    gamma_corrected = np.array(255 * (img / 255) ** gamma, dtype='uint8')
+    return gamma_corrected
+
+
 def down_sampling(img,factor):
+    #reduce number of pixels in image
     height=img.shape[0]
     length=img.shape[1]
     res = cv2.resize(img, (int(length /factor), int(height / factor)))
     res = cv2.resize(res, (length, height))
     return res
 
+def to_negative(img):
+    res=cv2.bitwise_not(img)
+    return res
+
+def intensity_slicing(img,min_range,max_range):
+    #only map pixels in range, else is mapped 0
+    height = img.shape[0]
+    length = img.shape[1]
+    for i in range(height):
+        for j in range(length):
+            if img[i, j] > min_range and img[i, j] < max_range:
+                img[i, j] = 255
+            else:
+                img[i, j] = 0
+    return img
+
+def bit_plane_slicing(img,bit):
+    #bit should be between 0 and 7
+    plane = np.full((img.shape[0], img.shape[1]), 2 ** bit, np.uint8)
+    res = cv2.bitwise_and(plane, img)
+    x = res * 255
+    return x
+
 def optimize_preprocess(img):
+    #optimize picture before processing
     rows, cols = img.shape
     nrows = cv2.getOptimalDFTSize(rows)
     ncols = cv2.getOptimalDFTSize(cols)
-    nimg = np.zeros((nrows, ncols))
-    nimg[:rows, :cols] = img
+    nimg=cv2.resize(img,(ncols,nrows))
     return nimg
 
 def test(img):
@@ -56,11 +89,14 @@ def test(img):
                 img[i][j]=img[i-1][j]
     return img
 
-img = cv2.imread('1.jpg', 1)
-img = cv2.resize(img,(800,450))
-cv2.imshow("original",img)
-res=log_transform(img)
 
+img = cv2.imread('1.jpg', 0)
+use_img = cv2.resize(img,(800,450))
+use_img=optimize_preprocess(use_img)
+
+
+cv2.imshow("original",use_img)
+res=bit_plane_slicing(use_img,2)
 cv2.imshow("edited",res)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
