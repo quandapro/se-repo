@@ -83,12 +83,10 @@ def bit_plane_slicing(img,bit):
     res = res * 255
     return res
 
-def sharpening(img):
+def sharpening(img,kernel):
     #credited to #fanbd for the idea
     #should change the kernel depends on what kind of image were dealing with
-    kernel = np.array([[-1, -1, -1],
-                       [-1, 9, -1],
-                       [-1, -1, -1]])
+    # EX: kernel = np.array([[-1, -1, -1],[-1, 9, -1],[-1, -1, -1]])
     sharp = cv2.filter2D(img, -1, kernel)
     blur = cv2.GaussianBlur(img, (3, 3), 0)
     res = cv2.addWeighted(sharp, 1.5,blur , -0.5, 0)
