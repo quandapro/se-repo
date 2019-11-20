@@ -27,10 +27,10 @@ class Prediction:
         pred = self.model.predict(np.array([image]))
         return pred
 
-# def main():
-#     image = cv2.imread('../../images/0af296d2f04a.png')
-#     predictor = Prediction(model_weights_path='model_weights.h5')
-#     print(predictor.predict(image))
+def main():
+    image = cv2.imread('../../images/0af296d2f04a.png')
+    predictor = Prediction(model_weights_path='model_weights.h5')
+    print(predictor.predict(image))
 
-# main()
+main()
         
