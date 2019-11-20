@@ -1,8 +1,10 @@
 import os
 import tensorflow as tf 
 import keras
+import numpy as np
 from keras.applications import MobileNetV2
 from keras.layers import GlobalAveragePooling2D, Dense
+from keras.models import Model
 import cv2
 
 class Prediction:
@@ -22,6 +24,13 @@ class Prediction:
 
     def predict(self, image):
         image = cv2.resize(image, (256, 256))
-        pred = model.predict(np.array([image]))
+        pred = self.model.predict(np.array([image]))
         return pred
+
+# def main():
+#     image = cv2.imread('../../images/0af296d2f04a.png')
+#     predictor = Prediction(model_weights_path='model_weights.h5')
+#     print(predictor.predict(image))
+
+# main()
         
