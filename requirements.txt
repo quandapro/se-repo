@@ -1,0 +1,4 @@
+tensorflow 
+keras # Deep learning libraries
+numpy # Linear algebra library
+opencv-python # Image processing library
