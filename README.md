@@ -3,16 +3,14 @@
 <h3> 1.1. Goals </h3>
 <ul>
   <li>Có demo tốt để thi vấn đáp cuối kỳ môn CNPM</li>
-  <li>Phát triển phần mềm để ứng dụng vào thực tế tại các bệnh viện</li>
-  <li>Tạo ra được một phần mềm có thể dùng được</li>
+  <li>Nâng cao kỹ năng làm việc nhóm</li>
+  <li>Nâng cao kỹ năng lập trình và xây dựng phần mềm</li>
+  <li>Nâng cao hiểu biết về các quá trính làm việc và cấu trúc chung cỏ tổ chức</li>
 </ul>
 <h3> 1.2. Objectives </h3>
 <ul>
-  <li>Nâng cao kỹ năng làm việc nhóm</li>
-  <li>Nâng cao kỹ năng lập trình và xây dựng phần mềm</li>
   <li>Phát triển phần mềm để ứng dụng vào thực tế tại các bệnh viện</li>
   <li>Tạo ra một phần mềm xem ảnh võng mạc, đưa ra tỉ lệ mắt có bị bệnh hay không</li>
-  <li>Nâng cao hiểu biết về các quá trính làm việc và cấu trúc chung cỏ tổ chức</li>
 </ul>
 <h2> 2. Tools & Technologies </h2>
 <h3> 2.1 Tools </h3>
