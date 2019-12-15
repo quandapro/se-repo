@@ -20,7 +20,7 @@ def index():
     return redirect(url_for('home'))
 
 # Login 
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     msg = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
@@ -56,6 +56,30 @@ def home():
     if 'loggedin' not in session:
         return redirect(url_for('login'))
     return render_template('home.html', username=session['username'])
+
+@app.route('/doctor', methods=['POST'])
+def add_doctor():
+    msg = ''
+    if 'username' not in session or session['username'] != 'admin':
+        msg = 'You are not admin!'
+    else:
+        if request.method == 'POST' and 'username' in request.args and 'password' in request.args:
+            username = request.args['username']
+            password = request.args['password']
+
+            print(username)
+            print(password)
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+            account = cursor.fetchone()
+            if account:
+                msg = 'Account already exists!'
+            else :
+                cursor.execute('INSERT INTO users VALUES (%s, %s)', (username, password))
+                mysql.connection.commit()
+                msg = 'You have successfully registered!'
+    return msg
 # @app.route("/about")
 # @app.route('/service')
 
