@@ -55,6 +55,11 @@ def logout():
 def home():
     if 'loggedin' not in session:
         return redirect(url_for('login'))
+    if session['username'] == 'admin':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users')
+        accounts = cursor.fetchall()
+        print(accounts)
     return render_template('home.html', username=session['username'])
 
 @app.route('/doctor', methods=['POST'])
@@ -80,7 +85,6 @@ def add_doctor():
                 mysql.connection.commit()
                 msg = 'You have successfully registered!'
     return msg
-# @app.route("/about")
 # @app.route('/service')
 
 if __name__ == "__main__":
