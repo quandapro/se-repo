@@ -1,8 +1,0 @@
-tensorflow 
-keras # Deep learning libraries
-numpy # Linear algebra library
-opencv-python # Image processing library
-matplotlib # Image processing library
-flask #framework library
-flask-mysqldb #SQL Database library
-Werkzeug #framework library

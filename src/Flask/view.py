@@ -60,20 +60,18 @@ def home():
         cursor.execute('SELECT * FROM users')
         accounts = cursor.fetchall()
         print(accounts)
-    return render_template('home.html', username=session['username'])
+    return render_template('home.html', username=session['username'], accounts=accounts, len = len(accounts))
 
 @app.route('/doctor', methods=['POST'])
-def add_doctor():
+def doctor():
     msg = ''
     if 'username' not in session or session['username'] != 'admin':
         msg = 'You are not admin!'
+        return redirect(url_for('login'))
     else:
-        if request.method == 'POST' and 'username' in request.args and 'password' in request.args:
-            username = request.args['username']
-            password = request.args['password']
-
-            print(username)
-            print(password)
+        if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+            username = request.form['username']
+            password = request.form['password']
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
@@ -84,8 +82,9 @@ def add_doctor():
                 cursor.execute('INSERT INTO users VALUES (%s, %s)', (username, password))
                 mysql.connection.commit()
                 msg = 'You have successfully registered!'
-    return msg
-# @app.route('/service')
+    return redirect(url_for('home'))
+
+
 
 if __name__ == "__main__":
     app.run(port= 8080)

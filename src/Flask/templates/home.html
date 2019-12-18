@@ -1,8 +1,57 @@
-{% extends 'layout.html' %}
 
-{% block title %}Home{% endblock %}
+<html>
+    <head><title>{{ username }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    <body>
+    <p>{{ msg }}</p>
+    <div class="table-box">
+            <div class="table-row table-head">
+                <div class="table-cell first-cell">
+                    <p>Usernames</p>
+                </div>
+                <div class="table-cell">
+                    <p>Passwords</p>
+                </div>
+                <div class="table-cell last-cell">
+                    <p>Options</p>
+                </div> 
+            </div>
+    
+            {%for i in range(0, len)%}
+            <div class="table-row">
+                <div class="table-cell first-cell">
+                    <p>{{accounts[i]['username']}}</p>
+                </div>
+                <div class="table-cell">
+                    <p>{{accounts[i]['password']}}</p>
+                </div>
+                <div class="table-cell last-cell">
+                    <button class="delete" name="{{i}}">Delete</button>
+                </div>   
+            </div>
+            {%endfor%}
+            <form action="{{ url_for('doctor') }}" method="POST">
+                <div class="table-row">
+                    
+                        <div class="table-cell first-cell">
+                            <input type="text" name='username' width="100%">
+                        </div>
+                        <div class="table-cell">
+                            <input type="text" name='password'>
+                        </div>
+                        <div class="table-cell last-cell">
+                            <button type='submit'>Add</button>
+                        </div>
+                </div>
+            </form>
+    </div> 
+    <script>
+        document.getElementsByClassName("delete").addEventListener("click", function(){
 
-{% block content %}
-<h2>Home Page</h2>
-<p>Welcome back, {{ username }}!</p>
-{% endblock %}
+        });
+        
+    </script>  
+    </body>
+    </html>
