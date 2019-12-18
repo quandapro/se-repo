@@ -69,6 +69,7 @@ def doctor():
         msg = 'You are not admin!'
         return redirect(url_for('login'))
     else:
+        # ADD DOCTOR
         if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
             username = request.form['username']
             password = request.form['password']
@@ -82,6 +83,8 @@ def doctor():
                 cursor.execute('INSERT INTO users VALUES (%s, %s)', (username, password))
                 mysql.connection.commit()
                 msg = 'You have successfully registered!'
+
+    print(msg)
     return redirect(url_for('home'))
 
 
