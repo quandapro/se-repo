@@ -62,8 +62,8 @@ def home():
         print(accounts)
     return render_template('home.html', username=session['username'], accounts=accounts, len = len(accounts))
 
-@app.route('/doctor', methods=['POST'])
-def doctor():
+@app.route('/admin', methods=['POST'])
+def add_doctor():
     msg = ''
     if 'username' not in session or session['username'] != 'admin':
         msg = 'You are not admin!'
