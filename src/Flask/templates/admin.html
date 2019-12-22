@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <title>{{ username }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</head>
+
+<body>
+    <div class='container'>
+        <h1>Welcome back {{ username }}!</h1>
+        <p>{{ msg }}</p>
+        <table class="table table-striped">
+            <thead>
+                <th>
+                    <p>Usernames</p>
+                </th>
+                <th>
+                    <p>Passwords</p>
+                </th>
+                <th>
+                    <p>Options</p>
+                </th>
+            <thead>
+            <tbody>
+                {%for i in range(0, len)%}
+                <tr>
+                    <td>
+                        <p>{{accounts[i]['username']}}</p>
+                    </td>
+                    <td>
+                        <p>{{accounts[i]['password']}}</p>
+                    </td>
+                    <td class="table-cell last-cell">
+
+                    </td>
+                </tr>
+                {%endfor%}
+                <form action="{{ url_for('admin') }}" method="POST">
+                    <tr>
+                        <td>
+                            <input type="text" name='username' width="80%" required>
+                        </td>
+                        <td>
+                            <input type="text" name='password' width="80%" required>
+                        </td>
+                        <td>
+                            <button type='submit' class="btn btn-primary">Add</button>
+                        </td>
+                    </tr>
+                </form>
+            </tbody>
+        </table>
+        <a href="{{ url_for('logout') }}">
+            <button type="button" class="btn btn-secondary">
+                Log out!
+            </button>
+        </a>
+    </div>
+</body>
+
+</html>
