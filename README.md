@@ -26,4 +26,11 @@
   <li>OpenCV</li>
   <li>Flask</li>
 </ul>
-
+<h2> 3.Installation & Notes </h2>
+<h3> 3.1 Installation </h3>
+<h3> 3.2 Notes </h3>
+<h2> 4.Requirements </h2>
+<ul>
+  <li>Python 3.5+</li>
+  <li>Tensorflow 1.9+</li>
+</ul>
