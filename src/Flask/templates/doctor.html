@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor.css') }}">
     <script src="{{ url_for('static', filename='js/jquery.3.4.1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 
 <body>
@@ -29,10 +30,17 @@
             <div class='col-md-6 right'>
                 <h2>Diabetic retinopathy: {{ predict }}%</h2>
                 <br>
-                <img src="{{ image }}" alt="">
+                <div class="img-zoom-container">
+                    <img src="{{ image }}" id='myimage'>
+                    <div id="myresult" class="img-zoom-result"></div>
+                </div>
+                
             </div>
         </div>
     </div>
+    <script>
+        imageZoom("myimage", "myresult");
+    </script>
 </body>
 
 </html>
