@@ -16,12 +16,14 @@
 <h3> 2.1 Tools </h3>
 <ul>
   <li>PycharmIDE</li>
+  <li>PhpMyAdmin</li>
+  <li>MySQLServer</li>
 </ul>
 <h3> 2.2. Technologies </h3>
 <ul>
   <li>Python</li>
   <li>Tensorflow</li>
   <li>OpenCV</li>
+  <li>Flask</li>
 </ul>
 
-Note: Only use image_processing_func.py to test functions related to image pre-processing and processing.
