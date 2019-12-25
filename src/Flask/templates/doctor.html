@@ -24,22 +24,25 @@
     </nav>
     <div class='container'>
         <div class='row'>
-            <div class="col-md-6 left">
-
-            </div>
-            <div class='col-md-6 right'>
-                <h2>Diabetic retinopathy: {{ predict }}%</h2>
-                <br>
+            <div class="col-md-5 left">
                 <div class="img-zoom-container">
-                    <img src="{{ image }}" id='myimage'>
-                    <div id="myresult" class="img-zoom-result"></div>
+                    <img src="{{ image }}" id='myimage_1'>
+                    <div id="myresult_1" class="img-zoom-result"></div>
                 </div>
-                
+            </div>
+            <div class="col-md-2"></div>
+            <div class='col-md-5 right'>
+                <div class="img-zoom-container">
+                    <img src="{{ image }}" id='myimage_2'>
+                    <div id="myresult_2" class="img-zoom-result"></div>
+                </div>
             </div>
         </div>
+        <h2>Diabetic retinopathy: {{ predict }}%</h2>
     </div>
     <script>
-        imageZoom("myimage", "myresult");
+        imageZoom("myimage_1", "myresult_1");
+        imageZoom("myimage_2", "myresult_2");
     </script>
 </body>
 
