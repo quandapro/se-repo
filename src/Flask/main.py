@@ -92,6 +92,18 @@ def admin():
 
     return render_template('admin.html', username=session['username'], accounts=accounts, len = len(accounts), msg=msg)
 
+@app.route('/delete')
+def delete():
+    if session['username'] != 'admin':
+        return redirect(url_for('index'))
+    if 'username' in request.args and request.args.get('username') != 'admin':
+        username = request.args.get('username')
+        print(username)
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('DELETE FROM users WHERE username = %s', (username,))
+        mysql.connection.commit()
+    return redirect(url_for('admin'))
+
 @app.route('/doctor', methods=['GET', 'POST'])
 def doctor():
     image_filename = '0e0003ddd8df.png'
