@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
+from flask_socketio import SocketIO
+
 import MySQLdb.cursors
 import re
 
 import os
 import cv2
-from predict import Prediction
+# from predict import Prediction
 
-predictor = Prediction("model_weights.h5")
+# predictor = Prediction("model_weights.h5")
 
 app = Flask(__name__)
 app.secret_key = 'thisissecret'
@@ -17,9 +19,12 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'retinadb'
 
+socketio = SocketIO(app)
+
 mysql = MySQL(app)
 
 predicted = {}
+processed_images = {}
 
 @app.route("/index")
 @app.route("/")
@@ -109,14 +114,16 @@ def doctor():
     image_filename = '0e0003ddd8df.png'
     image_path = url_for('static', filename='images/' + image_filename)
     image = cv2.imread(os.path.join('static/images', '0e0003ddd8df.png' ))
-    auto_predict = 0
-    if image_filename in predicted:
-        auto_predict = predicted[image_filename]
-    else:
-        auto_predict = predictor.predict(image)[0]
-        predicted[image_filename] = auto_predict
-    final_prediction = "%.3f" % auto_predict
-    return render_template('doctor.html', image=image_path, predict=final_prediction)
+    # auto_predict = 0
+    # if image_filename in predicted:
+        # auto_predict = predicted[image_filename]
+    # else:
+        # auto_predict = predictor.predict(image)[0]
+        # predicted[image_filename] = auto_predict
+    # final_prediction = "%.3f" % auto_predict
+    return render_template('doctor.html', image=image_path, predict=0.000)
+
+
 
 if __name__ == "__main__":
     app.run(port=5000)

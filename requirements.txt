@@ -1,6 +1,7 @@
 tensorflow==1.13.1
-opencv-python==4.1.1
+opencv-python==4.1.1.26
 flask==1.1.1
 MySQLdb==1.4.6
 numpy==1.16.4
 keras==2.2.5
+flask-socketio
