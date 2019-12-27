@@ -32,5 +32,6 @@
 <h2> 4.Requirements </h2>
 <ul>
   <li>Python 3.5+</li>
+  <li>MySQL Server</li>
   <li>Tensorflow 1.9+</li>
 </ul>
