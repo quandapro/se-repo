@@ -24,6 +24,8 @@
 git clone https://github.com/quandapro/SE03-group06
 cd SE03-group06
 python -m pip install -r requirements.txt
+cd src/Flask
+python main.py
 ```
 ### 3.2 Notes 
 ## 4.Requirements
