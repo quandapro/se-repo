@@ -1,4 +1,4 @@
-$(document).ready(function () {
+ $(document).ready(function () {
     $('.autosubmit').click(function(){
         let options = []
         $('.autosubmit').each(function(){
@@ -15,6 +15,8 @@ $(document).ready(function () {
             dataType: 'json',
             success: function(data, status, xhr) {
                 $("#myimage_2").attr('src', data)
+                imageZoom("myimage_1", "myresult_1");
+                imageZoom("myimage_2", "myresult_2");
             }
         })
     })
@@ -24,6 +26,9 @@ function imageZoom(imgID, resultID) {
     var img, lens, result, cx, cy;
     img = document.getElementById(imgID);
     result = document.getElementById(resultID);
+    if ($(".img-zoom-lens").length == 2){
+        $(".img-zoom-lens").remove()
+    }
     /* Create lens: */
     lens = document.createElement("DIV");
     lens.setAttribute("class", "img-zoom-lens");
@@ -74,4 +79,4 @@ function imageZoom(imgID, resultID) {
         y = y - window.pageYOffset;
         return { x: x, y: y };
     }
-}
+}   

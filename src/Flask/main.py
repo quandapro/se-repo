@@ -138,6 +138,7 @@ def image():
         original_image = request.form['image']
         image_path = './static/images/' + original_image
         image = cv2.imread(image_path)
+        image = preprocessing.optimize_preprocess(image)
 
         req_str = request.form['data']
 
