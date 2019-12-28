@@ -6,7 +6,8 @@ def high_pass_filter(img):
     #use to detect edges of picture
     f = np.fft.fft2(img)
     fshift = np.fft.fftshift(f)
-    rows, cols = img.shape
+    rows=img.shape[0]
+    cols=img.shape[1]
     crow, ccol = int(rows / 2), int(cols / 2)
     fw_size=100
     fshift[crow - int(fw_size/2):crow + int(fw_size/2), ccol - int(fw_size/2):ccol + int(fw_size/2)] = 0
@@ -14,6 +15,7 @@ def high_pass_filter(img):
     img_back = np.fft.ifft2(f_ishift)
     img_back = np.abs(img_back)
     return img_back
+
 def gauss_blur(img,ksize):
     #ksize needs to be odd number
     res=cv2.GaussianBlur(img,(ksize,ksize),sigmaX=0)
