@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor.css') }}">
     <script src="{{ url_for('static', filename='js/jquery.3.4.1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 
 <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{ url_for('doctor') }}">Viewer</a>
         <ul class="navbar-nav">
@@ -22,6 +22,7 @@
             </li>
         </ul>
     </nav>
+    <!-- Viewer -->
     <div class='container'>
         <div class='row'>
             <div class="col-md-5 left">
@@ -40,146 +41,147 @@
         </div>
         <h2>Diabetic retinopathy: {{ predict }}%</h2>
     </div>
+    <!-- Image Processing Options -->
+    <div class="container">
+        <nav class="navbar navbar-light bg-light navbar-expand-md">
+            <a class="navbar-brand" href="#">Image Processing Options</a>
 
-    <nav class="navbar navbar-light bg-light navbar-expand-md">
-        <a class="navbar-brand" href="#">Image Processing Options</a>
+            <ul class="nav navbar-nav">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="checkbox navbar-btn">
+                        <label class="navbar-link" for="filterUnfulfilled">
+                            <input type="checkbox" class="autosubmit"  value="true" name="log-trans">
+                            Log transform
+                        </label>
+                    </div>
+                </form>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="checkbox navbar-btn">
+                        <label class="navbar-link" for="filterUnfulfilled">
+                            <input type="checkbox" class="autosubmit"  value="true" name="freg-domain">
+                            To frequency domain
+                        </label>
+                    </div>
+                </form>
+            </ul>
+            <ul class="nav navbar-nav">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="checkbox navbar-btn">
+                        <label class="navbar-link" for="filterUnfulfilled">
+                            <input type="checkbox" class="autosubmit"  value="true" name="to-negative">
+                            To negative
+                        </label>
+                    </div>
+                </form>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Noise reduce
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="checkbox navbar-btn">
+                                <label class="navbar-link" for="filterUnfulfilled">
+                                    <input type="checkbox" class="autosubmit"  value="true" name="high-pass">
+                                    High pass filter
+                                </label>
+                            </div>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="checkbox navbar-btn">
+                                <label class="navbar-link" for="filterUnfulfilled">
+                                    <input type="checkbox" class="autosubmit"  value="true" name="laplacian">
+                                    Laplacian
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gauss-noise
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Odd numbers <10"
+                                aria-label="Search">
+                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Intensity Slicing
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Min value(min is 0)"
+                                aria-label="Search">
+                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Max value(max is 255)"
+                                aria-label="Search">
+                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bit plane Slicing
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="range" placeholder="Input from 0-7"
+                                aria-label="Search">
+                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sharpening
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Kernel 1</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Kernel 2</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Kernel 3</a>
+                    </div>
+                </li>
 
-        <ul class="nav navbar-nav">
-            <form class="navbar-form navbar-left" role="search">
-                <div class="checkbox navbar-btn">
-                    <label class="navbar-link" for="filterUnfulfilled">
-                        <input type="checkbox" class="autosubmit" id="filterUnfulfilled" value="true">
-                        Log transform
-                    </label>
-                </div>
-            </form>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="checkbox navbar-btn">
-                    <label class="navbar-link" for="filterUnfulfilled">
-                        <input type="checkbox" class="autosubmit" id="filterUnfulfilled" value="true">
-                        To frequency domain
-                    </label>
-                </div>
-            </form>
-        </ul>
-        <ul class="nav navbar-nav">
-            <form class="navbar-form navbar-left" role="search">
-                <div class="checkbox navbar-btn">
-                    <label class="navbar-link" for="filterUnfulfilled">
-                        <input type="checkbox" class="autosubmit" id="filterUnfulfilled" value="true">
-                        To negative
-                    </label>
-                </div>
-            </form>
-        </ul>
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Noise reduce
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="checkbox navbar-btn">
-                            <label class="navbar-link" for="filterUnfulfilled">
-                                <input type="checkbox" class="autosubmit" id="filterUnfulfilled" value="true">
-                                High pass filter
-                            </label>
-                        </div>
-                    </form>
-                    <div class="dropdown-divider"></div>
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="checkbox navbar-btn">
-                            <label class="navbar-link" for="filterUnfulfilled">
-                                <input type="checkbox" class="autosubmit" id="filterUnfulfilled" value="true">
-                                Laplacian
-                            </label>
-                        </div>
-                    </form>
-                </div>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Gauss-noise
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Odd numbers <10"
-                            aria-label="Search">
-                        <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                    </form>
-                </div>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Intensity Slicing
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Min value(min is 0)"
-                            aria-label="Search">
-                        <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                    </form>
-                    <div class="dropdown-divider"></div>
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Max value(max is 255)"
-                            aria-label="Search">
-                        <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                    </form>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Bit plane Slicing
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Input from 0-7"
-                            aria-label="Search">
-                        <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                    </form>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Sharpening
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Kernel 1</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Kernel 2</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Kernel 3</a>
-                </div>
-            </li>
-
-        </ul>
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Gamma transform
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Input from 0.1 to 3"
-                            aria-label="Search">
-                        <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                    </form>
-                </div>
-            </li>
-        </ul>
-    </nav>
-
-
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gamma transform
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="range" placeholder="Input from 0.1 to 3"
+                                aria-label="Search">
+                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         imageZoom("myimage_1", "myresult_1");
         imageZoom("myimage_2", "myresult_2");

@@ -1,14 +1,22 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_mysqldb import MySQL
-from flask_socketio import SocketIO
+# from flask_socketio import SocketIO
 
 import MySQLdb.cursors
 import re
 
 import os
 import cv2
-# from predict import Prediction
 
+import image_processing.filters as filters
+import image_processing.preprocessing as preprocessing
+import image_processing.to_domain as to_domain
+
+import time
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
+# from predict import Prediction
 # predictor = Prediction("model_weights.h5")
 
 app = Flask(__name__)
@@ -19,7 +27,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'retinadb'
 
-socketio = SocketIO(app)
+# socketio = SocketIO(app)
 
 mysql = MySQL(app)
 
@@ -116,14 +124,37 @@ def doctor():
     image = cv2.imread(os.path.join('static/images', '0e0003ddd8df.png' ))
     # auto_predict = 0
     # if image_filename in predicted:
-        # auto_predict = predicted[image_filename]
+    #     auto_predict = predicted[image_filename]
     # else:
-        # auto_predict = predictor.predict(image)[0]
-        # predicted[image_filename] = auto_predict
+    #     auto_predict = predictor.predict(image)[0]
+    #     predicted[image_filename] = auto_predict
     # final_prediction = "%.3f" % auto_predict
-    return render_template('doctor.html', image=image_path, predict=0.000)
+    return render_template('doctor.html', image=image_path, predict=0.00)
 
+@app.route('/image', methods=['POST'])
+def image():
+    now = int(round(time.time() * 1000))
+    if request.method == "POST":
+        original_image = request.form['image']
+        image_path = './static/images/' + original_image
+        image = cv2.imread(image_path)
 
+        req_str = request.form['data']
 
+        if 'log-trans' in req_str:
+            image = to_domain.log_transform(image)
+        if 'freg-domain' in req_str:
+            image = to_domain.to_frequency_domain(image)
+        if 'to-negative' in req_str:
+            image = to_domain.to_negative(image)
+        if 'high-pass' in req_str:
+            image = filters.high_pass_filter(image)
+        if 'laplacian' in req_str:
+            image = filters.laplace(image)
+        
+        new_image = "{}_processed.png".format(str(now))
+        cv2.imwrite('./static/images/' + new_image, image)
+
+        return jsonify(url_for('static', filename='images/' + new_image))
 if __name__ == "__main__":
     app.run(port=5000)
