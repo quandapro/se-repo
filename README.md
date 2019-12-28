@@ -28,9 +28,11 @@
 </ul>
 <h2> 3.Installation & Notes </h2>
 <h3> 3.1 Installation </h3>
-  <p>git clone https://github.com/quandapro/SE03-group06</p>
-  <p>cd SE03-group06</p>
-  <p>python -m pip install requirements.txt
+```bat
+git clone https://github.com/quandapro/SE03-group06
+cd SE03-group06
+python -m pip install -r requirements.txt
+```
 <h3> 3.2 Notes </h3>
 <h2> 4.Requirements </h2>
 <ul>
