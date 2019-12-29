@@ -50,7 +50,7 @@
                 <form class="navbar-form navbar-left" role="search">
                     <div class="checkbox navbar-btn">
                         <label class="navbar-link" for="filterUnfulfilled">
-                            <input type="checkbox" class="autosubmit"  value="true" name="log-trans">
+                            <input type="checkbox" class="autosubmit" value="true" name="log-trans">
                             Log transform
                         </label>
                     </div>
@@ -58,7 +58,7 @@
                 <form class="navbar-form navbar-left" role="search">
                     <div class="checkbox navbar-btn">
                         <label class="navbar-link" for="filterUnfulfilled">
-                            <input type="checkbox" class="autosubmit"  value="true" name="freg-domain">
+                            <input type="checkbox" class="autosubmit" value="true" name="freg-domain">
                             To frequency domain
                         </label>
                     </div>
@@ -68,7 +68,7 @@
                 <form class="navbar-form navbar-left" role="search">
                     <div class="checkbox navbar-btn">
                         <label class="navbar-link" for="filterUnfulfilled">
-                            <input type="checkbox" class="autosubmit"  value="true" name="to-negative">
+                            <input type="checkbox" class="autosubmit" value="true" name="to-negative">
                             To negative
                         </label>
                     </div>
@@ -84,7 +84,7 @@
                         <form class="navbar-form navbar-left" role="search">
                             <div class="checkbox navbar-btn">
                                 <label class="navbar-link" for="filterUnfulfilled">
-                                    <input type="checkbox" class="autosubmit"  value="true" name="high-pass">
+                                    <input type="checkbox" class="autosubmit" value="true" name="high-pass">
                                     High pass filter
                                 </label>
                             </div>
@@ -93,7 +93,7 @@
                         <form class="navbar-form navbar-left" role="search">
                             <div class="checkbox navbar-btn">
                                 <label class="navbar-link" for="filterUnfulfilled">
-                                    <input type="checkbox" class="autosubmit"  value="true" name="laplacian">
+                                    <input type="checkbox" class="autosubmit" value="true" name="laplacian">
                                     Laplacian
                                 </label>
                             </div>
@@ -108,11 +108,8 @@
                         Gauss-noise
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="number" placeholder="Odd numbers <10"
-                                aria-label="Search">
-                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                        </form>
+                        <input class="form-control mr-sm-2" type="range" min=1 max=9 name='gauss-noise' value=1>
+                        <label for="gauss-noise">Odd numbers < 10</label>
                     </div>
                 </li>
             </ul>
@@ -123,17 +120,12 @@
                         Intensity Slicing
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="number" placeholder="Min value(min is 0)"
-                                aria-label="Search">
-                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                        </form>
+                        <input class="form-control mr-sm-2" type="range" min=0 max=255 name="min-value" value=0>
+                        <label for="min-value">Min value(min is 0)</label>
                         <div class="dropdown-divider"></div>
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="number" placeholder="Max value(max is 255)"
-                                aria-label="Search">
-                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                        </form>
+                        <input class="form-control mr-sm-2" type="range" name="max-value" min=0
+                            max=255 value=0>
+                        <label for="max-value">Max value(max is 255)</label>
                     </div>
                 </li>
                 <li class="dropdown">
@@ -142,11 +134,8 @@
                         Bit plane Slicing
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="range" placeholder="Input from 0-7"
-                                aria-label="Search">
-                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                        </form>
+                        <input class="form-control mr-sm-2" type="range" min=0 max=7 name='bit-plane-slicing' value=0>
+                        <label for="bit-plane-slicing">Input from 0-7</label>
                     </div>
                 </li>
                 <li class="dropdown">
@@ -155,11 +144,14 @@
                         Sharpening
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#"><input class="autosubmit" type="checkbox" name="kernel-1">Kernel 1</input></a>
+                        <a class="dropdown-item" href="#"><input class="autosubmit" type="checkbox"
+                                name="kernel-1">Kernel 1</input></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><input class="autosubmit" type="checkbox" name="kernel-2">Kernel 2</input></a>
+                        <a class="dropdown-item" href="#"><input class="autosubmit" type="checkbox"
+                                name="kernel-2">Kernel 2</input></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><input class="autosubmit" type="checkbox" name="kernel-3">Kernel 3</input></a>
+                        <a class="dropdown-item" href="#"><input class="autosubmit" type="checkbox"
+                                name="kernel-3">Kernel 3</input></a>
                     </div>
                 </li>
 
@@ -171,11 +163,9 @@
                         Gamma transform
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="range" placeholder="Input from 0.1 to 3"
-                                aria-label="Search">
-                            <button class="btn btn-sm btn-outline-secondary" type="submit">Submit</button>
-                        </form>
+                        <input class="form-control mr-sm-2" type="range" min=0.1
+                            max=3 name='gamma' value=1>
+                        <label for="gamma">Input from 0.1 to 3</label>
                     </div>
                 </li>
             </ul>
