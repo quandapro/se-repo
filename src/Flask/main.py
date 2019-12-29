@@ -152,6 +152,12 @@ def image():
             image = filters.high_pass_filter(image)
         if 'laplacian' in req_str:
             image = filters.laplace(image)
+        if 'kernel-1' in req_str:
+            image = filters.sharpening(image, 1)
+        if 'kernel-2' in req_str:
+            image = filters.sharpening(image, 2)
+        if 'kernel-3' in req_str:
+            image = filters.sharpening(image, 3)
         
         new_image = "{}_processed.png".format(str(now))
         cv2.imwrite('./static/images/' + new_image, image)
