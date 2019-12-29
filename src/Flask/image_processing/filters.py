@@ -3,6 +3,7 @@ import numpy as np
 
 
 def high_pass_filter(img):
+    img = np.uint8(img)
     #use to detect edges of picture
     f = np.fft.fft2(img)
     fshift = np.fft.fftshift(f)
@@ -17,11 +18,13 @@ def high_pass_filter(img):
     return img_back
 
 def gauss_blur(img,ksize):
+    img = np.uint8(img)
     #ksize needs to be odd number
     res=cv2.GaussianBlur(img,(ksize,ksize),sigmaX=0)
     return res
 
 def laplace(img):
+    img=np.uint8(img)
     #a way to detect edges
     ksize=3
     ddepth=cv2.CV_16S
@@ -35,6 +38,7 @@ def laplace(img):
     return res
 
 def intensity_slicing(img,min_range,max_range):
+    img = np.uint8(img)
     #only map pixels in range, else is mapped 0
     height = img.shape[0]
     length = img.shape[1]
@@ -47,6 +51,7 @@ def intensity_slicing(img,min_range,max_range):
     return img
 
 def bit_plane_slicing(img,bit):
+    img = np.uint8(img)
     #bit should be between 0 and 7
     plane = np.full((img.shape[0], img.shape[1]), 2 ** bit, np.uint8)
     res = cv2.bitwise_and(plane, img)
@@ -54,6 +59,7 @@ def bit_plane_slicing(img,bit):
     return res
 
 def sharpening(img,option):
+    img = np.uint8(img)
     #credited to #fanbd for the idea
     #should change the kernel depends on what kind of image were dealing with
     kernel_1 = np.array([[-1, -1, -1],[-1, 9, -1],[-1, -1, -1]])
