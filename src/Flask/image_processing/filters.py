@@ -25,7 +25,10 @@ def laplace(img):
     #a way to detect edges
     ksize=3
     ddepth=cv2.CV_16S
-    gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    if len(img.shape)==3:
+        gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    else:
+        gray = img
     blur=cv2.GaussianBlur(gray,(ksize,ksize),0)
     laplace=cv2.Laplacian(blur,ddepth,ksize=ksize)
     res=cv2.convertScaleAbs(laplace)
