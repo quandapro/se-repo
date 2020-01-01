@@ -7,8 +7,6 @@ from keras.layers import GlobalAveragePooling2D, Dense
 from keras.models import Model
 import cv2
 
-graph = tf.get_default_graph()
-
 class Prediction:
     def __init__(self, model_weights_path):
         self.model = self.get_model(model_weights_path)
@@ -21,13 +19,13 @@ class Prediction:
         model = Model(inputs=base_model.input, outputs=x)
 
         model.load_weights(model_weights_path)
+        model._make_predict_function()
 
         return model
 
     def predict(self, image):
         image = cv2.resize(image, (256, 256))
-        with graph.as_default():
-            pred = self.model.predict(np.array([image]))
+        pred = self.model.predict(np.array([image]))
         return pred
 
         

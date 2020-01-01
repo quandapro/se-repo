@@ -14,10 +14,10 @@ import image_processing.to_domain as to_domain
 
 import time
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-# from predict import Prediction
-# predictor = Prediction("model_weights.h5")
+from predict import Prediction
+predictor = Prediction("model_weights.h5")
 
 app = Flask(__name__)
 app.secret_key = 'thisissecret'
@@ -26,8 +26,6 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'retinadb'
-
-# socketio = SocketIO(app)
 
 mysql = MySQL(app)
 
@@ -41,7 +39,7 @@ def index():
         return redirect(url_for('login'))
     if session['username'] == 'admin':
         return redirect(url_for('admin'))
-    return redirect(url_for('doctor'))
+    return redirect(url_for('browser'))
 
 # Login 
 @app.route('/login', methods=['GET', 'POST'])
@@ -119,20 +117,28 @@ def delete():
 
 @app.route('/doctor', methods=['GET', 'POST'])
 def doctor():
+    if 'username' not in session or session['username'] == 'admin':
+        return redirect(url_for('index')) 
     image_filename = '0e0003ddd8df.png'
+    if 'image' in request.args:
+        image_filename = request.args['image']
+    
     image_path = url_for('static', filename='images/' + image_filename)
-    image = cv2.imread(os.path.join('static/images', '0e0003ddd8df.png' ))
-    # auto_predict = 0
-    # if image_filename in predicted:
-    #     auto_predict = predicted[image_filename]
-    # else:
-    #     auto_predict = predictor.predict(image)[0]
-    #     predicted[image_filename] = auto_predict
-    # final_prediction = "%.3f" % auto_predict
-    return render_template('doctor.html', image=image_path, predict=0.00)
+    image = cv2.imread(os.path.join('static/images', image_filename ))
+    auto_predict = 0
+    if image_filename in predicted:
+        auto_predict = predicted[image_filename]
+    else:
+        auto_predict = predictor.predict(image)[0] * 100
+        predicted[image_filename] = auto_predict
+    print(auto_predict)
+    final_prediction = "%.3f" % auto_predict
+    return render_template('doctor.html', image=image_path, predict=final_prediction, username=session['username'])
 
 @app.route('/image', methods=['POST'])
 def image():
+    if 'username' not in session or session['username'] == 'admin':
+        return jsonify("Permission denied!")
     now = int(round(time.time() * 1000))
     if request.method == "POST":
         original_image = request.form['image']
@@ -158,12 +164,29 @@ def image():
             image = filters.sharpening(image, 2)
         if 'kernel-3' in req_str:
             image = filters.sharpening(image, 3)
-
-        
         
         new_image = "{}_processed.png".format(str(now))
         cv2.imwrite('./static/images/' + new_image, image)
 
         return jsonify(url_for('static', filename='images/' + new_image))
+
+@app.route('/browser', methods=['GET'])
+def browser():
+    if 'username' not in session or session['username'] == 'admin':
+        return redirect(url_for('index'))
+    image_folder = './static/images/'
+    client_folder = '/static/images/'
+    files = os.listdir(image_folder)
+    images = []
+    for filename in files:
+        # Skip processed images
+        if 'processed' not in filename and ('png' in filename or 'jpg' in filename):
+            images.append(filename)
+    client_images_path = [client_folder + x for x in images]
+
+    patientID = [x.split('.')[0] for x in images]
+    return render_template('browser.html', images=images, patientID=patientID, images_path=client_images_path, length=len(images))
+
+
 if __name__ == "__main__":
     app.run(port=5000)
