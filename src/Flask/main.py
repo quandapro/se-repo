@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, get_flashed_messages
 from flask_mysqldb import MySQL
 # from flask_socketio import SocketIO
 
@@ -55,7 +55,6 @@ def login():
         cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
 
         account = cursor.fetchone()
-        print("account")
 
         if account:
             session['loggedin'] = True
@@ -63,7 +62,7 @@ def login():
             if session['username'] == 'admin':
                 return redirect(url_for('admin'))
             else:
-                return redirect(url_for('doctor'))
+                return redirect(url_for('browser'))
         else:
             msg = 'Incorrect username/password!'
 
@@ -109,7 +108,6 @@ def delete():
         return redirect(url_for('index'))
     if 'username' in request.args and request.args.get('username') != 'admin':
         username = request.args.get('username')
-        print(username)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('DELETE FROM users WHERE username = %s', (username,))
         mysql.connection.commit()
@@ -119,9 +117,27 @@ def delete():
 def doctor():
     if 'username' not in session or session['username'] == 'admin':
         return redirect(url_for('index')) 
+
+    # Submit diagnosis
+    if request.method == 'POST' and 'diagnosis' in request.form and 'id' in request.args:
+        diagnosis = request.form['diagnosis']
+        patientID = request.args['id']
+        try:
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('INSERT INTO patient VALUES (%s, %s, %s)', (patientID, diagnosis, session['username']))
+            mysql.connection.commit()
+        except:
+            flash("Submit error!")
+            return redirect(url_for('doctor', id=patientID))
+        flash("Submit success!")
+        return redirect(url_for('doctor', id=patientID))
+
+    # Load default image if image is not present in args
     image_filename = '0e0003ddd8df.png'
-    if 'image' in request.args:
-        image_filename = request.args['image']
+    if 'id' in request.args:
+        image_filename = request.args['id'] + '.png'
+
+    patientID = image_filename.split('.')[0]
     
     image_path = url_for('static', filename='images/' + image_filename)
     image = cv2.imread(os.path.join('static/images', image_filename ))
@@ -131,9 +147,8 @@ def doctor():
     else:
         auto_predict = predictor.predict(image)[0] * 100
         predicted[image_filename] = auto_predict
-    print(auto_predict)
-    final_prediction = "%.3f" % auto_predict
-    return render_template('doctor.html', image=image_path, predict=final_prediction, username=session['username'])
+    final_prediction = "%.3f %s" % (auto_predict, '%  (Auto diagnosis)')
+    return render_template('doctor.html', image=image_path, predict=final_prediction, username=session['username'], patientID=request.args['id'])
 
 @app.route('/image', methods=['POST'])
 def image():
@@ -185,7 +200,7 @@ def browser():
     client_images_path = [client_folder + x for x in images]
 
     patientID = [x.split('.')[0] for x in images]
-    return render_template('browser.html', images=images, patientID=patientID, images_path=client_images_path, length=len(images))
+    return render_template('browser.html', images=images, patientID=patientID, images_path=client_images_path, length=len(images), username=session['username'])
 
 
 if __name__ == "__main__":

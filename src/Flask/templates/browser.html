@@ -44,7 +44,7 @@
                         <img src="{{ images_path[i] }}" width="60px" height="60px">
                     </td>
                     <td>
-                        <i><a href="{{ url_for('doctor', image=images[i]) }}">View in viewer</a></i>
+                        <i><a href="{{ url_for('doctor', id=patientID[i]) }}">View in viewer</a></i>
                     </td>
                 </tr>
                 {%endfor%}
