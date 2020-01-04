@@ -162,6 +162,10 @@ def image():
         image = preprocessing.optimize_preprocess(image)
 
         req_str = request.form['data']
+        req_str['gauss_noise'] = request.form['gauss_noise']
+        req_str['bit-plane-slicing'] = request.form['bit-plane-slicing']
+        req_str['gamma'] = request.form['gamma']
+
 
         if 'log-trans' in req_str:
             image = to_domain.log_transform(image)
@@ -179,7 +183,14 @@ def image():
             image = filters.sharpening(image, 2)
         if 'kernel-3' in req_str:
             image = filters.sharpening(image, 3)
-        
+        if 'gauss-noise' in req_str:
+            image = filters.gauss_blur(image,req_str['gauss_noise'])
+        if 'bit-plane-slicing' in req_str:
+            image = filters.bit_plane_slicing(image,req_str['bit-plane-slicing'])
+        if 'gamma' in req_str:
+            image = to_domain.gamma_transform(image,req_str['gamma'])
+
+
         new_image = "{}_processed.png".format(str(now))
         cv2.imwrite('./static/images/' + new_image, image)
 
