@@ -169,8 +169,6 @@ def image():
 
         if 'log-trans' in req_str:
             image = to_domain.log_transform(image)
-        if 'freg-domain' in req_str:
-            image = to_domain.to_frequency_domain(image)
         if 'to-negative' in req_str:
             image = to_domain.to_negative(image)
         if 'high-pass' in req_str:
