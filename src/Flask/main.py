@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, get_flashed_messages
 from flask_mysqldb import MySQL
+import json
 # from flask_socketio import SocketIO
 
 import MySQLdb.cursors
@@ -16,8 +17,8 @@ import time
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-from predict import Prediction
-predictor = Prediction("model_weights.h5")
+# from predict import Prediction
+# predictor = Prediction("model_weights.h5")
 
 app = Flask(__name__)
 app.secret_key = 'thisissecret'
@@ -142,11 +143,11 @@ def doctor():
     image_path = url_for('static', filename='images/' + image_filename)
     image = cv2.imread(os.path.join('static/images', image_filename ))
     auto_predict = 0
-    if image_filename in predicted:
-        auto_predict = predicted[image_filename]
-    else:
-        auto_predict = predictor.predict(image)[0] * 100
-        predicted[image_filename] = auto_predict
+    # if image_filename in predicted:
+    #     auto_predict = predicted[image_filename]
+    # else:
+    #     auto_predict = predictor.predict(image)[0] * 100
+    #     predicted[image_filename] = auto_predict
     final_prediction = "%.3f %s" % (auto_predict, '%  (Auto diagnosis)')
     return render_template('doctor.html', image=image_path, predict=final_prediction, username=session['username'], patientID=request.args['id'])
 
@@ -162,9 +163,12 @@ def image():
         image = preprocessing.optimize_preprocess(image)
 
         req_str = request.form['data']
-        req_str['gauss_noise'] = request.form['gauss_noise']
-        req_str['bit-plane-slicing'] = request.form['bit-plane-slicing']
-        req_str['gamma'] = request.form['gamma']
+        slider_str = request.form['sliders']
+        slider_obj = json.loads(slider_str)
+        # print(slider_obj.keys())
+        # req_str['gauss_noise'] = slider_obj['gauss-noise']
+        # req_str['bit-plane-slicing'] = slider_obj['bit-plane-slicing']
+        # req_str['gamma'] = slider_obj['gamma']
 
 
         if 'log-trans' in req_str:
@@ -181,12 +185,12 @@ def image():
             image = filters.sharpening(image, 2)
         if 'kernel-3' in req_str:
             image = filters.sharpening(image, 3)
-        if 'gauss-noise' in req_str:
-            image = filters.gauss_blur(image,req_str['gauss_noise'])
-        if 'bit-plane-slicing' in req_str:
-            image = filters.bit_plane_slicing(image,req_str['bit-plane-slicing'])
-        if 'gamma' in req_str:
-            image = to_domain.gamma_transform(image,req_str['gamma'])
+        if 'gauss-noise' in slider_obj:
+            image = filters.gauss_blur(image,int(slider_obj['gauss-noise']))
+        # if 'bit-plane-slicing' in slider_obj:
+        #     image = filters.bit_plane_slicing(image,float(slider_obj['bit-plane-slicing']))
+        if 'gamma' in slider_obj:
+            image = to_domain.gamma_transform(image,float(slider_obj['gamma']))
 
 
         new_image = "{}_processed.png".format(str(now))

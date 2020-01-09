@@ -1,17 +1,25 @@
- $(document).ready(function () {
-    $('.autosubmit').click(function(){
+$(document).ready(function () {
+    function preprocessing(){
         let options = []
+        let sliders = {}
         $('.autosubmit').each(function(){
             if ($(this).prop("checked")){
                 options.push($(this).attr("name"))
             }
+        })
+
+        $('.slider').each(function(){
+            key = $(this).attr("name")
+            value = $(this).attr("value")
+            sliders[key] = value
         })
         original_image = $("#myimage_1").attr('src').split('/')[3]
         $.ajax({
             type: "POST",
             url: "/image",
             data: {image: original_image, 
-                data: JSON.stringify(options)},
+                data: JSON.stringify(options),
+                sliders: JSON.stringify(sliders)},
             dataType: 'json',
             success: function(data, status, xhr) {
                 $("#myimage_2").attr('src', data)
@@ -19,6 +27,13 @@
                 imageZoom("myimage_2", "myresult_2");
             }
         })
+    }
+    $('.autosubmit').click(function(){
+        preprocessing();
+    })
+
+    $('.slider').change(function(){
+        preprocessing();
     })
 });
 

@@ -25,7 +25,7 @@
     </nav>
     <!-- Viewer -->
     <div class='container'>
-        <h1>Case {{ patientID }}</h1>
+        <h2>Case {{ patientID }}</h2>
         <div class='row'>
             <div class="col-md-5 left">
                 <div class="img-zoom-container">
@@ -44,7 +44,7 @@
         <h2>Diabetic retinopathy: {{ predict }}</h2>
         <form action="{{ url_for('doctor', id=patientID) }}" method="POST">
             <input type="text" name='diagnosis' placeholder="Your diagnosis here..." size="100" required>
-            <button type="submit">Submit</button>
+            <button class='btn btn-outline-success' type="submit">Submit</button>
         </form>
     </div>
     <!-- Image Processing Options -->
@@ -104,7 +104,7 @@
                         Gauss-noise
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <input class="form-control mr-sm-2" type="range" min=1 max=9 name='gauss-noise' value=1>
+                        <input class="form-control mr-sm-2 slider" type="range" min=1 max=9 name='gauss-noise' value=1>
                         <label for="gauss-noise">Odd numbers < 10
                         </label>
                     </div>
@@ -117,7 +117,7 @@
                         Gamma transform
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <input class="form-control mr-sm-2" type="range" min=0.1 max=3 name='gamma' value=1>
+                        <input class="form-control mr-sm-2 slider" type="range" min=0.1 max=3 name='gamma' value=1>
                         <label for="gamma">Input from 0.1 to 3</label>
                     </div>
                 </li>
@@ -129,10 +129,10 @@
                         Intensity Slicing
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <input class="form-control mr-sm-2" type="range" min=0 max=255 name="min-value" value=0>
+                        <input class="form-control mr-sm-2 slider" type="range" min=0 max=255 name="min-value" value=0>
                         <label for="min-value">Min value(min is 0)</label>
                         <div class="dropdown-divider"></div>
-                        <input class="form-control mr-sm-2" type="range" name="max-value" min=0 max=255 value=0>
+                        <input class="form-control mr-sm-2 slider" type="range" name="max-value" min=0 max=255 value=0>
                         <label for="max-value">Max value(max is 255)</label>
                     </div>
                 </li>
@@ -142,7 +142,7 @@
                         Bit plane Slicing
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <input class="form-control mr-sm-2" type="range" min=0 max=7 name='bit-plane-slicing' value=0>
+                        <input class="form-control mr-sm-2 slider" type="range" min=0 max=7 name='bit-plane-slicing' value=0>
                         <label for="bit-plane-slicing">Input from 0-7</label>
                     </div>
                 </li>
