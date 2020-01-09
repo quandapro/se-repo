@@ -11,7 +11,7 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('doctor') }}">Viewer</a>
+        <a class="navbar-brand" href="#">Viewer</a>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="navbar-brand" href="{{ url_for('browser') }}">Browser<span class="sr-only">(current)</span></a>
@@ -31,7 +31,7 @@
                     <p>Image Preview</p>
                 </th>
                 <th>
-                    <p>Link</p>
+                    <p>Diagnosis</p>
                 </th>
             <thead>
             <tbody>
@@ -41,10 +41,12 @@
                         <p>{{patientID[i]}}</p>
                     </td>
                     <td>
-                        <img src="{{ images_path[i] }}" width="60px" height="60px">
+                        <a href="{{ url_for('doctor', id=patientID[i]) }}">
+                            <img src="{{ images_path[i] }}" width="60px" height="60px">
+                        </a>
                     </td>
                     <td>
-                        <i><a href="{{ url_for('doctor', id=patientID[i]) }}">View in viewer</a></i>
+                        <i><p>{{ diagnosis_list[i] }}</p></i>
                     </td>
                 </tr>
                 {%endfor%}

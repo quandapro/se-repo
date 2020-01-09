@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, get_flashed_messages
 from flask_mysqldb import MySQL
 import json
-# from flask_socketio import SocketIO
 
 import MySQLdb.cursors
 import re
@@ -149,7 +148,10 @@ def doctor():
     #     auto_predict = predictor.predict(image)[0] * 100
     #     predicted[image_filename] = auto_predict
     final_prediction = "%.3f %s" % (auto_predict, '%  (Auto diagnosis)')
-    return render_template('doctor.html', image=image_path, predict=final_prediction, username=session['username'], patientID=request.args['id'])
+    return render_template('doctor.html', image=image_path, 
+                                            predict=final_prediction, 
+                                            username=session['username'], 
+                                            patientID=request.args['id'])
 
 @app.route('/image', methods=['POST'])
 def image():
@@ -165,11 +167,6 @@ def image():
         req_str = request.form['data']
         slider_str = request.form['sliders']
         slider_obj = json.loads(slider_str)
-        # print(slider_obj.keys())
-        # req_str['gauss_noise'] = slider_obj['gauss-noise']
-        # req_str['bit-plane-slicing'] = slider_obj['bit-plane-slicing']
-        # req_str['gamma'] = slider_obj['gamma']
-
 
         if 'log-trans' in req_str:
             image = to_domain.log_transform(image)
@@ -206,6 +203,7 @@ def browser():
     client_folder = '/static/images/'
     files = os.listdir(image_folder)
     images = []
+    diagnosis_list = []
     for filename in files:
         # Skip processed images
         if 'processed' not in filename and ('png' in filename or 'jpg' in filename):
@@ -213,8 +211,23 @@ def browser():
     client_images_path = [client_folder + x for x in images]
 
     patientID = [x.split('.')[0] for x in images]
-    return render_template('browser.html', images=images, patientID=patientID, images_path=client_images_path, length=len(images), username=session['username'])
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    for pid in patientID:
+        cursor.execute("SELECT * FROM patient WHERE patientID = %s", (pid,))
+        result = cursor.fetchone()
+        diagnosis = "No diagnosis yet."
+        if result:
+            comment = result['diagnosis']
+            doctor = result['diagnosis_by']
+            diagnosis = comment + " (by dr.{}).".format(doctor)
+        diagnosis_list.append(diagnosis)
 
+    return render_template('browser.html', images=images, 
+                                            patientID=patientID, 
+                                            images_path=client_images_path, 
+                                            length=len(images), 
+                                            username=session['username'],
+                                            diagnosis_list=diagnosis_list)
 
 if __name__ == "__main__":
     app.run(port=5000)
