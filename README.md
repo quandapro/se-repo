@@ -42,6 +42,7 @@ cd src/Flask
 python main.py
 ```
 Application is now live on port 5000.
+
 Start MySQL Server or Xampp and create database retinadb. Then import retinadb.sql, which contains admin account and a dummy doctor account. 
 ### 3.2 Usages
 #### Admin
