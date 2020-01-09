@@ -20,15 +20,27 @@
   * Flask
 ## 3.Installation & Notes
 ### 3.1 Installation
-```bat
-git clone https://github.com/quandapro/SE03-group06
-cd SE03-group06
-python -m pip install -r requirements.txt
-cd src/Flask
-python main.py
-```
-### 3.2 Notes 
-## 4.Requirements
+#### Supported Systems
+* Windows 8/10
+* Ubuntu
+#### Requirements
   * Python 3.5+
   * MySQL Server
   * Tensorflow 1.9+
+#### To install retina-viewer application:
+```bat
+git clone https://github.com/quandapro/SE03-group06
+cd SE03-group06
+```
+Install external libraries and dependencies:
+```bat
+python -m pip install -r requirements.txt
+```
+Navigate to src/Flask, start the application by the following commands:
+```bat
+cd src/Flask
+python main.py
+```
+Application is now live on port 5000.
+### 3.2 Notes 
+
