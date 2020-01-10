@@ -573,3 +573,12 @@ a{
 .focus + span::after{
     width: 100%;
 }
+
+.btn-hidden-toggle {
+    background: none;
+    border: none;
+}
+
+.password-hidden {
+    visibility: hidden;
+}
