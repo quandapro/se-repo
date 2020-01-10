@@ -11,8 +11,8 @@
   * Nâng cao kỹ năng lập trình và xây dựng phần mềm
   * Nâng cao hiểu biết về các quá trính làm việc và cấu trúc chung cỏ tổ chức
 ### 1.2. Objectives
-  * Phát triển phần mềm để ứng dụng vào thực tế tại các bệnh viện</li>
-  * Tạo ra một phần mềm xem ảnh võng mạc, đưa ra tỉ lệ mắt có bị bệnh hay không</li>
+  * Phát triển phần mềm để ứng dụng vào thực tế tại các bệnh viện
+  * Tạo ra một phần mềm xem ảnh võng mạc, đưa ra khả năng mắt có bị bệnh hay không. Việc tự động phỏng đoán khả năng có bệnh võng mạc (sử dụng các kỹ thuật học máy, deep learning) giúp giảm thời gian chẩn đoán và giúp bác sĩ trong việc đưa ra phác đồ điều trị phù hợp và kịp thời.
 ## 2. Tools & Technologies
 ### 2.1 Tools
   * PycharmIDE
