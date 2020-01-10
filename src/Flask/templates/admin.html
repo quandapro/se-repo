@@ -40,10 +40,10 @@
                         <p>{{accounts[i]['username']}}</p>
                     </td>
                     <td>
-                        <button class="btn-hidden-toggle" onclick="showHidePassword( {{ i }} )">
+                        <button class="btn-hidden-toggle" onclick="showHidePassword( {{ i }} )" id="button_{{i}}">
                             <i>Show Password</i>        
                         </button>
-                        <p class="password-hidden" id="{{i}}">{{accounts[i]['password']}}</p>
+                        <p class="password-hidden" id="password_{{i}}">{{accounts[i]['password']}}</p>
                     </td>
                     <td>
                         <i><a href="{{ url_for('delete', username=accounts[i]['username'])}}">Delete</a></i>
@@ -73,7 +73,12 @@
     </div>
 <script>
     function showHidePassword(i){
-        $(`#${i}`).toggleClass("password-hidden")
+        $(`#password_${i}`).toggleClass("password-hidden")
+        console.log($(`#button_${i}`).text())
+        if ($(`#button_${i}`).text().includes("Show"))
+            $(`#button_${i}`).text("Hide Password")
+        else 
+            $(`#button_${i}`).text("Show Password")
     }
 </script>
 </body>
