@@ -14,10 +14,10 @@ import image_processing.to_domain as to_domain
 
 import time
 
-# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-# from predict import Prediction
-# predictor = Prediction("model_weights.h5")
+from predict import Prediction
+predictor = Prediction("model_weights.h5")
 
 app = Flask(__name__)
 app.secret_key = 'thisissecret'
@@ -100,7 +100,10 @@ def admin():
             msg = 'You have successfully registered!'
             return redirect(url_for('admin', msg=msg))
 
-    return render_template('admin.html', username=session['username'], accounts=accounts, len = len(accounts), msg=msg)
+    return render_template('admin.html', username=session['username'], 
+                                         accounts=accounts, 
+                                         len = len(accounts), 
+                                         msg=msg)
 
 @app.route('/delete')
 def delete():
@@ -142,16 +145,16 @@ def doctor():
     image_path = url_for('static', filename='images/' + image_filename)
     image = cv2.imread(os.path.join('static/images', image_filename ))
     auto_predict = 0
-    # if image_filename in predicted:
-    #     auto_predict = predicted[image_filename]
-    # else:
-    #     auto_predict = predictor.predict(image)[0] * 100
-    #     predicted[image_filename] = auto_predict
+    if image_filename in predicted:
+        auto_predict = predicted[image_filename]
+    else:
+        auto_predict = predictor.predict(image)[0] * 100
+        predicted[image_filename] = auto_predict
     final_prediction = "%.3f %s" % (auto_predict, '%  (Auto diagnosis)')
     return render_template('doctor.html', image=image_path, 
-                                            predict=final_prediction, 
-                                            username=session['username'], 
-                                            patientID=request.args['id'])
+                                          predict=final_prediction, 
+                                          username=session['username'], 
+                                          patientID=request.args['id'])
 
 @app.route('/image', methods=['POST'])
 def image():
@@ -223,11 +226,11 @@ def browser():
         diagnosis_list.append(diagnosis)
 
     return render_template('browser.html', images=images, 
-                                            patientID=patientID, 
-                                            images_path=client_images_path, 
-                                            length=len(images), 
-                                            username=session['username'],
-                                            diagnosis_list=diagnosis_list)
+                                           patientID=patientID, 
+                                           images_path=client_images_path, 
+                                           length=len(images), 
+                                           username=session['username'],
+                                           diagnosis_list=diagnosis_list)
 
 if __name__ == "__main__":
     app.run(port=5000)
