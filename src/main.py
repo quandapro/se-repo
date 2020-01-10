@@ -75,6 +75,7 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+# Admin page
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     msg = ''
@@ -104,7 +105,7 @@ def admin():
                                          accounts=accounts, 
                                          len = len(accounts), 
                                          msg=msg)
-
+# Delete doctor
 @app.route('/delete')
 def delete():
     if session['username'] != 'admin':
@@ -116,6 +117,8 @@ def delete():
         mysql.connection.commit()
     return redirect(url_for('admin'))
 
+
+# Viewer and submit diagnosis
 @app.route('/doctor', methods=['GET', 'POST'])
 def doctor():
     if 'username' not in session or session['username'] == 'admin':
@@ -141,9 +144,10 @@ def doctor():
         image_filename = request.args['id'] + '.png'
 
     patientID = image_filename.split('.')[0]
-    
     image_path = url_for('static', filename='images/' + image_filename)
     image = cv2.imread(os.path.join('static/images', image_filename ))
+
+    # Auto diagnosis
     auto_predict = 0
     if image_filename in predicted:
         auto_predict = predicted[image_filename]
@@ -151,11 +155,13 @@ def doctor():
         auto_predict = predictor.predict(image)[0] * 100
         predicted[image_filename] = auto_predict
     final_prediction = "%.3f %s" % (auto_predict, '%  (Auto diagnosis)')
+
     return render_template('doctor.html', image=image_path, 
                                           predict=final_prediction, 
                                           username=session['username'], 
                                           patientID=request.args['id'])
 
+# Handle image processing request
 @app.route('/image', methods=['POST'])
 def image():
     if 'username' not in session or session['username'] == 'admin':
@@ -198,6 +204,7 @@ def image():
 
         return jsonify(url_for('static', filename='images/' + new_image))
 
+# Patient browser
 @app.route('/browser', methods=['GET'])
 def browser():
     if 'username' not in session or session['username'] == 'admin':
@@ -215,6 +222,7 @@ def browser():
 
     patientID = [x.split('.')[0] for x in images]
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
     for pid in patientID:
         cursor.execute("SELECT * FROM patient WHERE patientID = %s", (pid,))
         result = cursor.fetchone()

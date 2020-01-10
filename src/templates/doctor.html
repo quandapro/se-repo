@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor.css') }}">
     <script src="{{ url_for('static', filename='js/jquery.3.4.1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <!-- <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> -->
     <script src="{{ url_for('static', filename='js/popper.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
@@ -166,7 +165,14 @@
                 <li>
                     <p>Diabetic retinopathy: {{ predict }}</p>
                 </li>
+                <li>
+                    <form action="{{ url_for('doctor', id=patientID) }}" method="POST">
+                        <textarea type="text" name='diagnosis' placeholder="Your diagnosis here..." rows="10" cols="27" required></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+                </li>
                 </ul>
+                
             </div>
         </nav>
 
@@ -190,10 +196,6 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ url_for('doctor', id=patientID) }}" method="POST">
-                <input type="text" name='diagnosis' placeholder="Your diagnosis here..." size="80" required>
-                <button type="submit" class="btn btn-submit">Submit</button>
-            </form>
         </div>
     </div>
 
