@@ -3,6 +3,7 @@
 ### 1.1. Goals
   * Help doctor diagnose diabetic retinopathy quickly and accurately
 ### 1.2. Objectives
+  * Build a retina image viewer app
   * Build a machine learning model to speed up disease detection
   * Integrate disease detection model in retina image viewer app
 ## 2. Tools & Technologies
@@ -15,7 +16,7 @@
   * Tensorflow
   * OpenCV
   * Flask
-## 3.Installation & Usages
+## 3.Installation & Features
 ### 3.1 Installation
 #### Supported Systems
 * Windows 8/10
@@ -41,7 +42,7 @@ python main.py
 Application is now live on port 5000.
 
 Start MySQL Server or Xampp and create database retinadb. Then import retinadb.sql, which contains admin account and a dummy doctor account. 
-### 3.2 Usages
+### 3.2 Features
 #### Admin
 * Admin creates or deletes doctor's account. 
 * Admin's username is "admin".
@@ -50,6 +51,8 @@ Start MySQL Server or Xampp and create database retinadb. Then import retinadb.s
 * Doctor's username should be his/her fullname in lowercase without spaces.
 #### Auto Diagnosis 
 Auto diagnosis shows how likely a patient has diabetic retinopathy based on patient's retina image. With accuracy of over 91% on thousands test images, we hope this feature will help doctor make decision easier and more accurate!
+#### Image Processing
+Great variety of image processing methods to help doctor extract retina's features and easily detect herrmorhages, cotton wools spot, hard exudates present in retina. 
 ## Team members
 * Dương Anh Quân (Team leader)
 * Đào Quang Minh Hiếu
