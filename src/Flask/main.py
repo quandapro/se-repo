@@ -183,7 +183,7 @@ def image():
         if 'kernel-3' in req_str:
             image = filters.sharpening(image, 3)
         if 'gauss-noise' in slider_obj:
-            image = filters.gauss_blur(image,int(slider_obj['gauss-noise']))
+            image = filters.gauss_blur(image,2*int(slider_obj['gauss-noise']) + 1)
         # if 'bit-plane-slicing' in slider_obj:
         #     image = filters.bit_plane_slicing(image,float(slider_obj['bit-plane-slicing']))
         if 'gamma' in slider_obj:
