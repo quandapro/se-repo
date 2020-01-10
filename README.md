@@ -1,18 +1,10 @@
 # RetinaViewer
-## Team members
-* Dương Anh Quân (Team leader)
-* Đào Quang Minh Hiếu
-* Phạm Nhật Hiếu
-* Trương Hoàng Giang
 ## 1. Goals & Objectives
 ### 1.1. Goals
-  * Có demo tốt để thi vấn đáp cuối kỳ môn CNPM
-  * Nâng cao kỹ năng làm việc nhóm
-  * Nâng cao kỹ năng lập trình và xây dựng phần mềm
-  * Nâng cao hiểu biết về các quá trính làm việc và cấu trúc chung cỏ tổ chức
+  * Help doctor diagnose diabetic retinopathy quickly and accurately
 ### 1.2. Objectives
-  * Phát triển phần mềm để ứng dụng vào thực tế tại các bệnh viện
-  * Tạo ra một phần mềm xem ảnh võng mạc, đưa ra khả năng mắt có bị bệnh hay không. Việc tự động phỏng đoán khả năng có bệnh võng mạc (sử dụng các kỹ thuật học máy, deep learning) giúp giảm thời gian chẩn đoán và giúp bác sĩ trong việc đưa ra phác đồ điều trị phù hợp và kịp thời.
+  * Build a machine learning model to speed up disease detection
+  * Integrate disease detection model in retina image viewer app
 ## 2. Tools & Technologies
 ### 2.1 Tools
   * PycharmIDE
@@ -58,4 +50,9 @@ Start MySQL Server or Xampp and create database retinadb. Then import retinadb.s
 * Doctor's username should be his/her fullname in lowercase without spaces.
 #### Auto Diagnosis 
 Auto diagnosis shows how likely a patient has diabetic retinopathy based on patient's retina image. With accuracy of over 91% on thousands test images, we hope this feature will help doctor make decision easier and more accurate!
+## Team members
+* Dương Anh Quân (Team leader)
+* Đào Quang Minh Hiếu
+* Phạm Nhật Hiếu
+* Trương Hoàng Giang
 
