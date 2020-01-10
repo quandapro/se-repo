@@ -51,13 +51,11 @@ Application is now live on port 5000.
 Start MySQL Server or Xampp and create database retinadb. Then import retinadb.sql, which contains admin account and a dummy doctor account. 
 ### 3.2 Usages
 #### Admin
-* Admin creates or deletes doctor's account.
-* Admin has no permission to view and diagnose patient. 
+* Admin creates or deletes doctor's account. 
 * Admin's username is "admin".
 #### Doctor
 * Doctor views patient's images, uses the viewer and gives diagnosis. 
-* Doctor does not have admin's priviledges.
 * Doctor's username should be his/her fullname in lowercase without spaces.
-#### Special Feature
+#### Auto Diagnosis 
 Auto diagnosis shows how likely a patient has diabetic retinopathy based on patient's retina image. With accuracy of over 91% on thousands test images, we hope this feature will help doctor make decision easier and more accurate!
 
