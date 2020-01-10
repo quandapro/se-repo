@@ -1,4 +1,9 @@
 # RetinaViewer
+## Team members
+* Dương Anh Quân (Team leader)
+* Đào Quang Minh Hiếu
+* Phạm Nhật Hiếu
+* Trương Hoàng Giang
 ## 1. Goals & Objectives
 ### 1.1. Goals
   * Có demo tốt để thi vấn đáp cuối kỳ môn CNPM
