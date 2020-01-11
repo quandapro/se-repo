@@ -151,7 +151,7 @@
                             </ul>
                         </li>
                         <li>
-                        <button type="button" class="btn btn-secondary btn-lg" id="saveButton">Save image</button>
+                        <button type="button" class="btn btn-secondary btn-md" id="saveButton">Save image</button>
                         </li>
                         <li>
                             <div class="checkbox navbar-btn">
@@ -204,6 +204,11 @@
     <script>
         imageZoom("myimage_1", "myresult_1");
         imageZoom("myimage_2", "myresult_2");
+    </script>
+    <script>
+        $("#saveButton").click(()=>{
+            alert("Save image successful!")
+        })
     </script>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
