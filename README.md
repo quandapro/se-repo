@@ -53,6 +53,7 @@ Start MySQL Server or Xampp and create database retinadb. Then import retinadb.s
 Auto diagnosis shows how likely a patient has diabetic retinopathy based on patient's retina image. With accuracy of over 91% on thousands test images, we hope this feature will help doctor make decision easier and more accurate!
 #### Image Processing
 Great variety of image processing methods to help doctor extract retina's features and easily detect herrmorhages, cotton wools spot, hard exudates present in retina. 
+Optimize image acording to dataset base, make image easier and better to use as input for machine learning model
 ## Team members
 * Dương Anh Quân (Team leader)
 * Đào Quang Minh Hiếu
