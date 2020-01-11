@@ -191,12 +191,17 @@ def image():
             image = filters.sharpening(image, 2)
         if 'kernel-3' in req_str:
             image = filters.sharpening(image, 3)
-        if 'gauss-noise' in slider_obj:
-            image = filters.gauss_blur(image,2*int(slider_obj['gauss-noise']) + 1)
+        # if 'gauss-noise' in slider_obj:
+        #     image = filters.gauss_blur(image,2*int(slider_obj['gauss-noise']) + 1)
         # if 'bit-plane-slicing' in slider_obj:
-        #     image = filters.bit_plane_slicing(image,float(slider_obj['bit-plane-slicing']))
-        if 'gamma' in slider_obj:
-            image = to_domain.gamma_transform(image,float(slider_obj['gamma']))
+        #     image = filters.bit_plane_slicing(image,int(slider_obj['bit-plane-slicing']))
+        # if 'min-value' in slider_obj and 'max-value' in slider_obj:
+        #     print(int(slider_obj['min-value']), int(slider_obj['max-value']))
+        #     image = filters.intensity_slicing(image, int(slider_obj['min-value']), int(slider_obj['max-value']))
+        # if 'gamma' in slider_obj:
+        #     gamma = float(slider_obj['gamma']) / 10.
+        #     print(gamma)
+        #     image = to_domain.gamma_transform(image,float(slider_obj['gamma']) / 10.)
 
 
         new_image = "{}_processed.png".format(str(now))

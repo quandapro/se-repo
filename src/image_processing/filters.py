@@ -42,13 +42,14 @@ def intensity_slicing(img,min_range,max_range):
     #only map pixels in range, else is mapped 0
     height = img.shape[0]
     length = img.shape[1]
+    gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     for i in range(height):
         for j in range(length):
-            if img[i, j] > min_range and img[i, j] < max_range:
-                img[i, j] = 255
+            if gray[i, j] > min_range and gray[i, j] < max_range:
+                gray[i, j] = 255
             else:
-                img[i, j] = 0
-    return img
+                gray[i, j] = 0
+    return gray
 
 def bit_plane_slicing(img,bit):
     img = np.uint8(img)
